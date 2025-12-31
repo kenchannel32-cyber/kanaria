@@ -109,81 +109,196 @@
     };
 
     // 活動データ（例）※ここを増やすほど「何千パターン」に近づけられます
-    const activities = {
-      exercise: [
-        { id:"ex-001", icon:"🏃", name:"しっぽ取り", desc:"安全に走って、瞬発力とチームワーク" },
-        { id:"ex-002", icon:"⚽️", name:"ボール運びリレー", desc:"コースを決めて順番にチャレンジ" },
-        { id:"ex-003", icon:"🧘", name:"かんたんストレッチ", desc:"室内でもOK。姿勢づくり" },
-        { id:"ex-004", icon:"🪢", name:"なわとびチャレンジ", desc:"回数・技を選んで段階的に" },
-      ],
-      finger: [
-        { id:"fi-001", icon:"🧩", name:"折り紙 1枚チャレンジ", desc:"手順カードを見て作る" },
-        { id:"fi-002", icon:"🧵", name:"ひも通し", desc:"集中しながら指先運動" },
-        { id:"fi-003", icon:"🧱", name:"小さな積み木タワー", desc:"崩さず積む工夫を考える" },
-      ],
-      focus: [
-        { id:"fo-001", icon:"🧠", name:"間違い探し", desc:"プリント1枚で静かに集中" },
-        { id:"fo-002", icon:"🔎", name:"さがし絵", desc:"テーマを決めて見つける" },
-        { id:"fo-003", icon:"✍️", name:"写し絵・写し書き", desc:"丁寧さを育てる" },
-      ],
-      craft: [
-        { id:"cr-001", icon:"🎨", name:"紙コップ工作", desc:"簡単に作って遊べる" },
-        { id:"cr-002", icon:"✂️", name:"切り絵", desc:"はさみの練習にも" },
-      ],
-      cook: [
-        { id:"co-001", icon:"🍳", name:"おにぎり作り", desc:"具材を選んで握る" },
-        { id:"co-002", icon:"🥗", name:"ミニサラダ", desc:"盛り付けで食育" },
-      ],
-      snack: [
-        { id:"sn-001", icon:"🍪", name:"簡単クッキー", desc:"型抜きで楽しい" },
-        { id:"sn-002", icon:"🍡", name:"フルーツ串", desc:"安全に配慮してカット" },
-      ],
-      rules: [
-        { id:"ru-001", icon:"🎲", name:"すごろく", desc:"ルールを守って遊ぶ" },
-        { id:"ru-002", icon:"🃏", name:"トランプ（神経衰弱）", desc:"記憶力＋順番を守る" },
-      ],
-      life: [
-        { id:"li-001", icon:"🏠", name:"身支度チェック", desc:"持ち物・片付けの習慣づくり" },
-        { id:"li-002", icon:"🧼", name:"手洗いポイント学習", desc:"ポスター作りにも展開可" },
-      ],
-      out: [
-        { id:"ou-001", icon:"🚌", name:"公園ルール確認散歩", desc:"安全確認・マナー学習" },
-        { id:"ou-002", icon:"🗺️", name:"近隣マップ探検", desc:"見つけたものを記録" },
-      ],
-    };
+    const activities =<script>
+  // URLパラメータ取得
+  const params = new URLSearchParams(location.search);
+  const cat = params.get("cat") || "exercise";
 
-    const titleEl = document.getElementById("pageTitle");
-    const metaEl  = document.getElementById("meta");
-    const listEl  = document.getElementById("list");
-    document.getElementById("backBtn").addEventListener("click", () => history.back());
+  // カテゴリ名（表示用）
+  const categoryName = {
+    exercise:"運動",
+    finger:"指先課題",
+    focus:"集中課題",
+    craft:"工作",
+    cook:"料理",
+    snack:"おやつ作り",
+    rules:"ルールゲーム",
+    life:"生活学習",
+    out:"外出",
+  };
 
-    const cname = categoryName[cat] || "活動";
-    titleEl.textContent = `${cname}（一覧）`;
+  /*
+    ✅ 活動データ（合計108件）
+    12件 × 9カテゴリ = 108件
+    療育でよく使われる枠組み（SST、視覚支援、実行機能、感覚統合、自己調整、協同遊びなど）を意識
+  */
+  const activities = {
+    exercise: [
+      { id:"ex-001", icon:"🏃", name:"しっぽ取り（ルール簡易）", desc:"合図で開始/停止。衝突を避ける範囲設定と役割交代。" },
+      { id:"ex-002", icon:"🟦", name:"コーンジグザグ走", desc:"視覚目印に沿って走る。空間認知と切替を育てる。" },
+      { id:"ex-003", icon:"🧘", name:"動物ヨガ（まねっこ）", desc:"呼吸→ポーズ→休憩の順。自己調整とボディイメージ。" },
+      { id:"ex-004", icon:"⚽️", name:"ボール運びリレー（2人1組）", desc:"協同・順番・待つ練習。距離を短くして成功体験。" },
+      { id:"ex-005", icon:"🎯", name:"的当て（距離調整）", desc:"成功しやすい距離から。粗大運動と目と手の協応。" },
+      { id:"ex-006", icon:"🪢", name:"なわとび段階チャレンジ", desc:"1回→連続→技。分解練習（スモールステップ）。" },
+      { id:"ex-007", icon:"🟠", name:"サーキット運動（3分×3種）", desc:"跳ぶ/くぐる/バランス。前もって見通し提示（視覚支援）。" },
+      { id:"ex-008", icon:"🧱", name:"バランスストーン渡り", desc:"足裏感覚と姿勢保持。落ちてもOKルールで安心。" },
+      { id:"ex-009", icon:"🧊", name:"ストップ＆ゴー（音で切替）", desc:"音が止まったら停止。抑制コントロール（実行機能）。" },
+      { id:"ex-010", icon:"🤝", name:"パラシュート遊び（布）", desc:"上げる/下げるの共同。集団の同調と調整。" },
+      { id:"ex-011", icon:"🦶", name:"足形ステップ（色順）", desc:"色の順に踏む。認知→運動の統合と注意。" },
+      { id:"ex-012", icon:"💪", name:"体幹ミッション（10秒）", desc:"プランク/壁押しなど。深部感覚で落ち着きやすく。" },
+    ],
 
-    const items = activities[cat] || [];
-    metaEl.textContent = `選択中：${cname} ／ ${items.length}件`;
+    finger: [
+      { id:"fi-001", icon:"🧵", name:"ひも通し（太→細）", desc:"難易度を段階化。両手協応と集中を育てる。" },
+      { id:"fi-002", icon:"🧩", name:"洗濯ばさみミッション", desc:"色カード通りに留める。ピンチ力と視覚スキャン。" },
+      { id:"fi-003", icon:"✂️", name:"直線→曲線の切り取り", desc:"線の上を切る練習。成功しやすい幅から。" },
+      { id:"fi-004", icon:"📎", name:"クリップつなぎ（数指定）", desc:"数・順番・達成。手指巧緻と数概念。" },
+      { id:"fi-005", icon:"🟡", name:"おはじき並べ（模倣）", desc:"見本を真似る。視覚模倣と位置関係。" },
+      { id:"fi-006", icon:"🧱", name:"小ブロック組立（見本カード）", desc:"手順を分けて提示。視覚支援＋構成。" },
+      { id:"fi-007", icon:"🧻", name:"ちぎり絵（枠内）", desc:"枠の中に貼る。力加減と枠認識。" },
+      { id:"fi-008", icon:"🧲", name:"マグネット迷路（ゆっくり）", desc:"線から外れたら戻る。抑制と微調整。" },
+      { id:"fi-009", icon:"🖍️", name:"点つなぎ（段階）", desc:"10点→30点。見通しを持って進める練習。" },
+      { id:"fi-010", icon:"🧼", name:"スポンジ絞り（容器移し）", desc:"水遊び要素で手指。手首と握力、達成感。" },
+      { id:"fi-011", icon:"🧷", name:"ボタン練習ボード", desc:"留める→外す。生活動作へ直結。" },
+      { id:"fi-012", icon:"🧱", name:"シール貼り（位置指定）", desc:"上/下/右/左など。空間語彙と手指操作。" },
+    ],
 
-    if(items.length === 0){
-      listEl.innerHTML = `<div class="empty">このカテゴリの活動がまだ登録されていません。</div>`;
-    } else {
-      items.forEach(a => {
-        const div = document.createElement("div");
-        div.className = "item";
-        div.addEventListener("click", () => {
-          // 次のアクション（詳細ページや action.html に渡す）
-          // いったん選んだ活動IDをURLで渡す形にしておく
-          location.href = `action.html?cat=${encodeURIComponent(cat)}&id=${encodeURIComponent(a.id)}`;
-        });
-        div.innerHTML = `
-          <div class="badge" aria-hidden="true">${a.icon}</div>
-          <div>
-            <div class="name">${a.name}</div>
-            <div class="desc">${a.desc}</div>
-          </div>
-        `;
-        listEl.appendChild(div);
+    focus: [
+      { id:"fo-001", icon:"🔎", name:"さがし絵（タイマー3分）", desc:"短時間集中→休憩。持続注意を育てる。" },
+      { id:"fo-002", icon:"🧠", name:"間違い探し（易→難）", desc:"成功体験から難度UP。視覚注意と比較。" },
+      { id:"fo-003", icon:"✍️", name:"写し書き（短文→長文）", desc:"姿勢/鉛筆/間隔をチェック。丁寧さと自己監視。" },
+      { id:"fo-004", icon:"🧩", name:"パズル（ピース数調整）", desc:"見通し提示。達成で自己効力感。" },
+      { id:"fo-005", icon:"🟦", name:"パターン並べ（AB/ABB）", desc:"規則性に気づく。ワーキングメモリ。" },
+      { id:"fo-006", icon:"📌", name:"ビンゴ（聞いてマーク）", desc:"聞く→探す→記録。聴覚注意と切替。" },
+      { id:"fo-007", icon:"🧘", name:"呼吸トレ（4-4-4）", desc:"吸う4→止め4→吐く4。自己調整の基本。" },
+      { id:"fo-008", icon:"🎧", name:"音当て（環境音）", desc:"集中して聴く→選ぶ。感覚の選択的注意。" },
+      { id:"fo-009", icon:"🗂️", name:"分類カード（色/形/用途）", desc:"同じ/ちがうを言語化。認知の整理。" },
+      { id:"fo-010", icon:"🧠", name:"感情カード（気持ち当て）", desc:"表情→気持ち→理由。SSTの導入。" },
+      { id:"fo-011", icon:"🧾", name:"手順カードでタスク実行", desc:"1→2→3の順で進める。実行機能と見通し。" },
+      { id:"fo-012", icon:"✅", name:"セルフチェック（できた？）", desc:"終わりに自己評価。自己監視・振り返り。" },
+    ],
+
+    craft: [
+      { id:"cr-001", icon:"🎨", name:"折り紙（手順カード付き）", desc:"視覚支援で順序を明確化。成功しやすい題材から。" },
+      { id:"cr-002", icon:"✂️", name:"切り貼りコラージュ", desc:"テーマを決める→集める→配置。計画性を育てる。" },
+      { id:"cr-003", icon:"🧻", name:"紙皿工作（回転ゴマ等）", desc:"単純工程で達成。手指と因果関係理解。" },
+      { id:"cr-004", icon:"📦", name:"箱の仕分け工作（分類ラベル）", desc:"色/用途で箱を作る。生活スキルに接続。" },
+      { id:"cr-005", icon:"🧷", name:"安全ピン風（洗濯ばさみアート）", desc:"留める動作で手指。デザインを工夫。" },
+      { id:"cr-006", icon:"🧱", name:"ストロー構造物（短→長）", desc:"支える/倒れるを学ぶ。試行錯誤を言語化。" },
+      { id:"cr-007", icon:"🖍️", name:"線からはみ出さない塗り絵", desc:"枠の認識と力加減。タイムより丁寧さ重視。" },
+      { id:"cr-008", icon:"🧲", name:"マグネット絵合わせ", desc:"同じ形を探して貼る。視覚探索とマッチング。" },
+      { id:"cr-009", icon:"🧵", name:"毛糸巻き（ボード）", desc:"巻く→整える。落ち着きやすい反復活動。" },
+      { id:"cr-010", icon:"📮", name:"メッセージカード作り", desc:"相手を想像→言葉を選ぶ。SST（他者視点）。" },
+      { id:"cr-011", icon:"🧊", name:"感覚素材（紙の質比べ）", desc:"つるつる/ざらざら等を言語化。感覚統合の入口。" },
+      { id:"cr-012", icon:"🏷️", name:"名札づくり（持ち物管理）", desc:"自分の物を識別。生活自立へつながる。" },
+    ],
+
+    cook: [
+      { id:"co-001", icon:"🍙", name:"おにぎり（具を選ぶ）", desc:"選択→実行→片付け。スモールステップで手順化。" },
+      { id:"co-002", icon:"🥗", name:"ミニサラダ（色で分類）", desc:"赤/緑/黄で分類して盛る。認知と食育。" },
+      { id:"co-003", icon:"🍲", name:"具材を数えるスープ", desc:"同じ数だけ入れる。数概念と手順。" },
+      { id:"co-004", icon:"🥚", name:"ゆで卵の殻むき練習", desc:"指先・力加減。やりやすいひび入れから。" },
+      { id:"co-005", icon:"🍞", name:"サンドイッチ組立", desc:"順番通りに重ねる。視覚手順カードが相性◎。" },
+      { id:"co-006", icon:"🧊", name:"氷を運ぶリレー（室内）", desc:"落とさない工夫。注意と速度コントロール。" },
+      { id:"co-007", icon:"🥄", name:"計量スプーンで混ぜる", desc:"同量を入れる。実行機能（計画→実行）。" },
+      { id:"co-008", icon:"🍠", name:"レンジ蒸し野菜（安全手順）", desc:"熱い/危険を視覚で提示。安全学習に。" },
+      { id:"co-009", icon:"🧼", name:"衛生ルール学習（手洗い）", desc:"チェック表で可視化。生活スキル強化。" },
+      { id:"co-010", icon:"🍚", name:"配膳シミュレーション", desc:"順番・声かけ・待つ。SST＋生活スキル。" },
+      { id:"co-011", icon:"🧊", name:"冷たい/温かいの違い言語化", desc:"感覚を言葉に。自己理解と自己表現。" },
+      { id:"co-012", icon:"🗒️", name:"レシピカード作り", desc:"材料→手順→片付け。見通し作りの練習。" },
+    ],
+
+    snack: [
+      { id:"sn-001", icon:"🍪", name:"型抜きクッキー（順番カード）", desc:"工程を写真で提示。待ち時間は別タスクで調整。" },
+      { id:"sn-002", icon:"🍎", name:"フルーツヨーグルト", desc:"切る/入れる/混ぜる。手指と手順。" },
+      { id:"sn-003", icon:"🍡", name:"フルーツ串（安全ルール）", desc:"道具の扱いを事前確認。見守り強化。" },
+      { id:"sn-004", icon:"🍫", name:"チョコのトッピング", desc:"選択肢から選ぶ→飾る。自己決定と達成。" },
+      { id:"sn-005", icon:"🧇", name:"ホットケーキミックス（混ぜる）", desc:"混ぜる回数を数える。力加減とリズム。" },
+      { id:"sn-006", icon:"🍠", name:"さつまいもスティック", desc:"数をそろえて盛る。視覚で整える練習。" },
+      { id:"sn-007", icon:"🍿", name:"ポップコーン（量を分ける）", desc:"同じ量を分ける。公平感と数概念。" },
+      { id:"sn-008", icon:"🥨", name:"おやつの選択会議（SST）", desc:"希望→理由→譲る/代案。話し合いスキル。" },
+      { id:"sn-009", icon:"🧼", name:"アレルギー注意ポスター作り", desc:"安全ルールを視覚化。理解と共有。" },
+      { id:"sn-010", icon:"🧊", name:"冷凍フルーツで感覚体験", desc:"冷たい刺激を言語化。苦手配慮しながら。" },
+      { id:"sn-011", icon:"📦", name:"おやつ配布（役割交代）", desc:"配る係/受け取る係。順番と社会性。" },
+      { id:"sn-012", icon:"🗓️", name:"おやつスケジュール作成", desc:"今日は何/次は何。見通しで落ち着きやすい。" },
+    ],
+
+    rules: [
+      { id:"ru-001", icon:"🎲", name:"すごろく（待つ練習）", desc:"順番・負けてもOKのルール確認。SSTに最適。" },
+      { id:"ru-002", icon:"🃏", name:"神経衰弱（枚数調整）", desc:"少枚数→増やす。記憶と抑制コントロール。" },
+      { id:"ru-003", icon:"🧩", name:"UNO（ルールを視覚掲示）", desc:"特別ルールはカードで掲示。混乱を減らす。" },
+      { id:"ru-004", icon:"🟦", name:"色合わせゲーム（簡易）", desc:"同じ色に置く。ルール理解の導入。" },
+      { id:"ru-005", icon:"🗣️", name:"ジェスチャー伝言", desc:"非言語コミュニケーション。SST（表出）。" },
+      { id:"ru-006", icon:"🎯", name:"得点ルールを決める会議", desc:"ルール作り→合意。メタ認知と交渉。" },
+      { id:"ru-007", icon:"⌛️", name:"タイムアタック（静かに）", desc:"静かに黙々。集中と自己管理。" },
+      { id:"ru-008", icon:"🧠", name:"推理ゲーム（はい/いいえ）", desc:"質問の仕方を学ぶ。論理と会話の順番。" },
+      { id:"ru-009", icon:"🤝", name:"協力ゲーム（全員で達成）", desc:"勝敗より共同達成。関係づくりに。" },
+      { id:"ru-010", icon:"📝", name:"ルールカード作成", desc:"守ることを短文で。視覚支援（掲示）。" },
+      { id:"ru-011", icon:"🧑‍🤝‍🧑", name:"役割カード（司会/記録）", desc:"係で参加しやすく。集団参加の支援。" },
+      { id:"ru-012", icon:"🔁", name:"リプレイ（振り返り）", desc:"よかった点を言う。ポジティブ行動支援に。" },
+    ],
+
+    life: [
+      { id:"li-001", icon:"🧺", name:"片付け手順（写真ラベル）", desc:"どこに戻すかを視覚化。自立を促す。" },
+      { id:"li-002", icon:"🧼", name:"手洗いチェック（5工程）", desc:"工程をカードで。衛生とルーティン化。" },
+      { id:"li-003", icon:"🧥", name:"上着/靴の整理（マーク）", desc:"自分の場所を明確に。見つけやすくする工夫。" },
+      { id:"li-004", icon:"⏰", name:"タイムタイマーで切替練習", desc:"終わりが見えると切替しやすい。実行機能支援。" },
+      { id:"li-005", icon:"📋", name:"ToDoリスト（3つだけ）", desc:"やることを少数に。達成→チェックで自己効力感。" },
+      { id:"li-006", icon:"🧠", name:"困った時のカード（助けて）", desc:"言いにくい子の支援。代替コミュニケーション。" },
+      { id:"li-007", icon:"🙂", name:"気持ち温度計（1〜5）", desc:"自分の状態を数で表す。自己理解と調整。" },
+      { id:"li-008", icon:"🧘", name:"クールダウンコーナー利用練習", desc:"行く→休む→戻る。自己調整の仕組み化。" },
+      { id:"li-009", icon:"🗣️", name:"あいさつスクリプト練習", desc:"定型文→状況別。SST（開始の言葉）。" },
+      { id:"li-010", icon:"🎒", name:"持ち物点検（写真チェック）", desc:"忘れ物予防。視覚支援で負担を減らす。" },
+      { id:"li-011", icon:"🧾", name:"お金ごっこ（買い物練習）", desc:"支払う/おつり/待つ。生活スキルと社会性。" },
+      { id:"li-012", icon:"🤝", name:"トラブル時の言い方練習", desc:"Iメッセージ（いやだった/やめて）。SSTの核。" },
+    ],
+
+    out: [
+      { id:"ou-001", icon:"🚶", name:"交通ルール散歩（止まる/見る）", desc:"止まる→見る→渡る。安全行動を繰り返し学習。" },
+      { id:"ou-002", icon:"🗺️", name:"近隣マップ探検（チェックリスト）", desc:"見つけた物に丸。見通しと達成が作れる。" },
+      { id:"ou-003", icon:"🛝", name:"公園で順番（遊具）", desc:"並ぶ/交代。SSTの実地練習。" },
+      { id:"ou-004", icon:"🔊", name:"音のルール（声の大きさ）", desc:"外でも屋内でも声の調整。自己調整。" },
+      { id:"ou-005", icon:"📷", name:"写真ミッション（テーマ探し）", desc:"赤い物/丸い物など。注意と分類。" },
+      { id:"ou-006", icon:"🌳", name:"自然観察（触る前に確認）", desc:"安全確認→観察→記録。感覚/科学への入口。" },
+      { id:"ou-007", icon:"🤝", name:"ペア行動（バディ）", desc:"一緒に移動。社会性と安全管理。" },
+      { id:"ou-008", icon:"🧾", name:"公共マナー（3つだけ）", desc:"走らない/さわらない/静かに。視覚カードで提示。" },
+      { id:"ou-009", icon:"🧠", name:"見通しカード（行程表）", desc:"行く→やる→帰る。予定の可視化で安心。" },
+      { id:"ou-010", icon:"🚌", name:"乗り物観察（数える）", desc:"車の色/数を数える。落ち着きやすい課題化。" },
+      { id:"ou-011", icon:"🧴", name:"外出準備（暑さ/寒さ対策）", desc:"帽子/水分など。自己管理スキル。" },
+      { id:"ou-012", icon:"✅", name:"外出ふり返り（よかった1つ）", desc:"成功体験を言語化。ポジティブ行動支援。" },
+    ],
+  };
+
+  const titleEl = document.getElementById("pageTitle");
+  const metaEl  = document.getElementById("meta");
+  const listEl  = document.getElementById("list");
+  document.getElementById("backBtn").addEventListener("click", () => history.back());
+
+  const cname = categoryName[cat] || "活動";
+  titleEl.textContent = `${cname}（一覧）`;
+
+  const items = activities[cat] || [];
+  metaEl.textContent = `選択中：${cname} ／ ${items.length}件`;
+
+  if(items.length === 0){
+    listEl.innerHTML = `<div class="empty">このカテゴリの活動がまだ登録されていません。</div>`;
+  } else {
+    items.forEach(a => {
+      const div = document.createElement("div");
+      div.className = "item";
+      div.addEventListener("click", () => {
+        location.href = `action.html?cat=${encodeURIComponent(cat)}&id=${encodeURIComponent(a.id)}`;
       });
-    }
-  </script>
+      div.innerHTML = `
+        <div class="badge" aria-hidden="true">${a.icon}</div>
+        <div>
+          <div class="name">${a.name}</div>
+          <div class="desc">${a.desc}</div>
+        </div>
+      `;
+      listEl.appendChild(div);
+    });
+  }
+</script>
 </body>
 </html>
