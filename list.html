@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>活動一覧</title>
+  <style>
+    :root{
+      --brand:#35b8b6;
+      --text:#111;
+      --muted:#666;
+      --bg:#f6f7f8;
+      --card:#fff;
+      --shadow: 0 10px 24px rgba(0,0,0,.08);
+      --radius:16px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Noto Sans JP","Segoe UI",Roboto,Arial;
+      color:var(--text);
+      background:var(--bg);
+    }
+    header{
+      background:var(--brand);
+      color:#fff;
+      padding:14px 12px;
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+    header .title{
+      font-weight:900;
+      letter-spacing:.04em;
+      font-size:18px;
+      flex:1;
+      text-align:center;
+      margin-right:34px; /* 戻る分の見た目調整 */
+    }
+    .back{
+      appearance:none;border:0;background:rgba(255,255,255,.18);
+      color:#fff;border-radius:999px;
+      padding:8px 12px;
+      font-weight:700;
+      cursor:pointer;
+    }
+    main{max-width:820px;margin:0 auto;padding:14px 12px 26px;}
+    .meta{color:var(--muted);font-size:13px;margin:8px 2px 12px;}
+    .list{
+      display:grid;
+      gap:12px;
+    }
+    .item{
+      background:var(--card);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:14px 14px;
+      display:flex;
+      align-items:center;
+      gap:12px;
+      cursor:pointer;
+      user-select:none;
+    }
+    .badge{
+      width:44px;height:44px;border-radius:12px;
+      display:grid;place-items:center;
+      background:#eef7f7;color:#116;
+      font-size:20px;
+      flex:0 0 auto;
+    }
+    .name{font-weight:900}
+    .desc{color:var(--muted);font-size:13px;margin-top:2px}
+    .empty{
+      background:var(--card);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:16px;
+      color:var(--muted);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <button class="back" type="button" id="backBtn">←</button>
+    <div class="title" id="pageTitle">活動一覧</div>
+  </header>
+
+  <main>
+    <div class="meta" id="meta"></div>
+    <div class="list" id="list"></div>
+  </main>
+
+  <script>
+    // URLパラメータ取得
+    const params = new URLSearchParams(location.search);
+    const cat = params.get("cat") || "exercise";
+
+    // カテゴリ名（表示用）
+    const categoryName = {
+      exercise:"運動",
+      finger:"指先課題",
+      focus:"集中課題",
+      craft:"工作",
+      cook:"料理",
+      snack:"おやつ作り",
+      rules:"ルールゲーム",
+      life:"生活学習",
+      out:"外出",
+    };
+
+    // 活動データ（例）※ここを増やすほど「何千パターン」に近づけられます
+    const activities = {
+      exercise: [
+        { id:"ex-001", icon:"🏃", name:"しっぽ取り", desc:"安全に走って、瞬発力とチームワーク" },
+        { id:"ex-002", icon:"⚽️", name:"ボール運びリレー", desc:"コースを決めて順番にチャレンジ" },
+        { id:"ex-003", icon:"🧘", name:"かんたんストレッチ", desc:"室内でもOK。姿勢づくり" },
+        { id:"ex-004", icon:"🪢", name:"なわとびチャレンジ", desc:"回数・技を選んで段階的に" },
+      ],
+      finger: [
+        { id:"fi-001", icon:"🧩", name:"折り紙 1枚チャレンジ", desc:"手順カードを見て作る" },
+        { id:"fi-002", icon:"🧵", name:"ひも通し", desc:"集中しながら指先運動" },
+        { id:"fi-003", icon:"🧱", name:"小さな積み木タワー", desc:"崩さず積む工夫を考える" },
+      ],
+      focus: [
+        { id:"fo-001", icon:"🧠", name:"間違い探し", desc:"プリント1枚で静かに集中" },
+        { id:"fo-002", icon:"🔎", name:"さがし絵", desc:"テーマを決めて見つける" },
+        { id:"fo-003", icon:"✍️", name:"写し絵・写し書き", desc:"丁寧さを育てる" },
+      ],
+      craft: [
+        { id:"cr-001", icon:"🎨", name:"紙コップ工作", desc:"簡単に作って遊べる" },
+        { id:"cr-002", icon:"✂️", name:"切り絵", desc:"はさみの練習にも" },
+      ],
+      cook: [
+        { id:"co-001", icon:"🍳", name:"おにぎり作り", desc:"具材を選んで握る" },
+        { id:"co-002", icon:"🥗", name:"ミニサラダ", desc:"盛り付けで食育" },
+      ],
+      snack: [
+        { id:"sn-001", icon:"🍪", name:"簡単クッキー", desc:"型抜きで楽しい" },
+        { id:"sn-002", icon:"🍡", name:"フルーツ串", desc:"安全に配慮してカット" },
+      ],
+      rules: [
+        { id:"ru-001", icon:"🎲", name:"すごろく", desc:"ルールを守って遊ぶ" },
+        { id:"ru-002", icon:"🃏", name:"トランプ（神経衰弱）", desc:"記憶力＋順番を守る" },
+      ],
+      life: [
+        { id:"li-001", icon:"🏠", name:"身支度チェック", desc:"持ち物・片付けの習慣づくり" },
+        { id:"li-002", icon:"🧼", name:"手洗いポイント学習", desc:"ポスター作りにも展開可" },
+      ],
+      out: [
+        { id:"ou-001", icon:"🚌", name:"公園ルール確認散歩", desc:"安全確認・マナー学習" },
+        { id:"ou-002", icon:"🗺️", name:"近隣マップ探検", desc:"見つけたものを記録" },
+      ],
+    };
+
+    const titleEl = document.getElementById("pageTitle");
+    const metaEl  = document.getElementById("meta");
+    const listEl  = document.getElementById("list");
+    document.getElementById("backBtn").addEventListener("click", () => history.back());
+
+    const cname = categoryName[cat] || "活動";
+    titleEl.textContent = `${cname}（一覧）`;
+
+    const items = activities[cat] || [];
+    metaEl.textContent = `選択中：${cname} ／ ${items.length}件`;
+
+    if(items.length === 0){
+      listEl.innerHTML = `<div class="empty">このカテゴリの活動がまだ登録されていません。</div>`;
+    } else {
+      items.forEach(a => {
+        const div = document.createElement("div");
+        div.className = "item";
+        div.addEventListener("click", () => {
+          // 次のアクション（詳細ページや action.html に渡す）
+          // いったん選んだ活動IDをURLで渡す形にしておく
+          location.href = `action.html?cat=${encodeURIComponent(cat)}&id=${encodeURIComponent(a.id)}`;
+        });
+        div.innerHTML = `
+          <div class="badge" aria-hidden="true">${a.icon}</div>
+          <div>
+            <div class="name">${a.name}</div>
+            <div class="desc">${a.desc}</div>
+          </div>
+        `;
+        listEl.appendChild(div);
+      });
+    }
+  </script>
+</body>
+</html>
