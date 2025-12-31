@@ -237,94 +237,228 @@
       </div>
     </div>
   </div>
-<script>
-const baseActivities = {
-  exercise: [
-    {id:"ex-01",icon:"🏃",name:"しっぽ取り",desc:"合図で開始停止。衝突回避とルール理解。"},
-    {id:"ex-02",icon:"🧊",name:"ストップ＆ゴー",desc:"音で動く/止まる。抑制コントロール。"},
-    {id:"ex-03",icon:"⚽️",name:"ボール転がし",desc:"座位でOK。目と手の協応。"},
-    {id:"ex-04",icon:"🧘",name:"動物ヨガ",desc:"まねっこで姿勢と呼吸。"},
-    {id:"ex-05",icon:"🟦",name:"カラーコーン走",desc:"色の順に移動。視覚支援。"},
-    {id:"ex-06",icon:"🦶",name:"足形ステップ",desc:"順番通りに踏む。"},
-    {id:"ex-07",icon:"🎯",name:"的当て",desc:"距離を調整して成功体験。"},
-    {id:"ex-08",icon:"🤝",name:"ペア運動",desc:"2人で協力。社会性。"},
-    {id:"ex-09",icon:"🪢",name:"なわジャンプ",desc:"1回ずつチャレンジ。"},
-    {id:"ex-10",icon:"🧱",name:"平均台ごっこ",desc:"バランス感覚。"},
-    {id:"ex-11",icon:"🕺",name:"まねっこダンス",desc:"模倣と注意。"},
-    {id:"ex-12",icon:"🏀",name:"ボールバウンド",desc:"リズム運動。"},
-    {id:"ex-13",icon:"🧘",name:"深呼吸体操",desc:"落ち着く運動。"},
-    {id:"ex-14",icon:"🚶",name:"ライン歩き",desc:"姿勢保持。"},
-    {id:"ex-15",icon:"🔁",name:"交代リレー",desc:"待つ→動く。"},
-    {id:"ex-16",icon:"📣",name:"号令体操",desc:"聞く→動く。"},
-    {id:"ex-17",icon:"🧠",name:"色×動作ゲーム",desc:"色で動作を変える。"},
-    {id:"ex-18",icon:"🦵",name:"その場足踏み",desc:"安全に運動。"},
-    {id:"ex-19",icon:"🪑",name:"椅子スクワット",desc:"体幹。"},
-    {id:"ex-20",icon:"🏃",name:"ミニサーキット",desc:"3工程を回る。"},
-  ],
 
-  finger: [
-    {id:"fi-01",icon:"🧵",name:"ひも通し",desc:"太→細で段階化。"},
-    {id:"fi-02",icon:"📎",name:"クリップ留め",desc:"指先と集中。"},
-    {id:"fi-03",icon:"🧩",name:"小パズル",desc:"少ピースから。"},
-    {id:"fi-04",icon:"✂️",name:"直線切り",desc:"安全はさみ使用。"},
-    {id:"fi-05",icon:"🟡",name:"おはじき並べ",desc:"模倣練習。"},
-    {id:"fi-06",icon:"🖍️",name:"点つなぎ",desc:"順番理解。"},
-    {id:"fi-07",icon:"🧱",name:"積み木積み",desc:"崩れにくく。"},
-    {id:"fi-08",icon:"🧲",name:"マグネット迷路",desc:"微調整。"},
-    {id:"fi-09",icon:"🧻",name:"ちぎり紙",desc:"力加減。"},
-    {id:"fi-10",icon:"🧷",name:"ボタン留め",desc:"生活動作。"},
-    {id:"fi-11",icon:"📌",name:"シール貼り",desc:"位置指定。"},
-    {id:"fi-12",icon:"🧼",name:"スポンジ絞り",desc:"手首運動。"},
-    {id:"fi-13",icon:"🪙",name:"コイン移し",desc:"つまむ動作。"},
-    {id:"fi-14",icon:"🧠",name:"左右分け",desc:"分類課題。"},
-    {id:"fi-15",icon:"📦",name:"箱詰め",desc:"空間認知。"},
-    {id:"fi-16",icon:"🧵",name:"毛糸巻き",desc:"反復で落ち着く。"},
-    {id:"fi-17",icon:"🖊️",name:"なぞり書き",desc:"線を意識。"},
-    {id:"fi-18",icon:"📎",name:"色分け留め",desc:"視覚×操作。"},
-    {id:"fi-19",icon:"🧩",name:"形合わせ",desc:"同一認知。"},
-    {id:"fi-20",icon:"✋",name:"指体操",desc:"準備運動。"},
-  ],
+  <script>
+    // -------------------------------
+    // 1) カテゴリ＆初期データ（最小例）
+    // ※ここはあなたの108件データに置き換えてOK
+    // -------------------------------
+    const params = new URLSearchParams(location.search);
+    const cat = params.get("cat") || "exercise";
 
-  focus: [
-    {id:"fo-01",icon:"🔎",name:"さがし絵",desc:"短時間集中。"},
-    {id:"fo-02",icon:"🧠",name:"間違い探し",desc:"比較と注意。"},
-    {id:"fo-03",icon:"✍️",name:"写し書き",desc:"姿勢と丁寧さ。"},
-    {id:"fo-04",icon:"📄",name:"プリント課題",desc:"黙々作業。"},
-    {id:"fo-05",icon:"🧩",name:"パズル集中",desc:"完成を目指す。"},
-    {id:"fo-06",icon:"🎧",name:"音聞き分け",desc:"聴覚注意。"},
-    {id:"fo-07",icon:"🧘",name:"呼吸カウント",desc:"自己調整。"},
-    {id:"fo-08",icon:"📌",name:"指示通りチェック",desc:"実行機能。"},
-    {id:"fo-09",icon:"🗂️",name:"分類カード",desc:"認知整理。"},
-    {id:"fo-10",icon:"⏱️",name:"タイマー課題",desc:"時間意識。"},
-    {id:"fo-11",icon:"🧠",name:"順序並べ",desc:"手順理解。"},
-    {id:"fo-12",icon:"📝",name:"メモ書き",desc:"記録習慣。"},
-    {id:"fo-13",icon:"🔁",name:"同じ絵探し",desc:"視覚集中。"},
-    {id:"fo-14",icon:"📚",name:"静読",desc:"静かに読む。"},
-    {id:"fo-15",icon:"🧩",name:"影合わせ",desc:"形認識。"},
-    {id:"fo-16",icon:"🎯",name:"的集中",desc:"一点集中。"},
-    {id:"fo-17",icon:"🧠",name:"感情カード",desc:"SST導入。"},
-    {id:"fo-18",icon:"📋",name:"チェックリスト",desc:"自己管理。"},
-    {id:"fo-19",icon:"🖍️",name:"塗り絵集中",desc:"枠意識。"},
-    {id:"fo-20",icon:"🧘",name:"クールダウン",desc:"気持ち切替。"},
-  ],
+    const categoryName = {
+      exercise:"運動",
+      finger:"指先課題",
+      focus:"集中課題",
+      craft:"工作",
+      cook:"料理",
+      snack:"おやつ作り",
+      rules:"ルールゲーム",
+      life:"生活学習",
+      out:"外出",
+    };
 
-  craft: Array.from({length:20},(_,i)=>({
-    id:`cr-${i+1}`,icon:"🎨",name:`工作アイデア${i+1}`,desc:"作って完成させる経験。"
-  })),
-  cook: Array.from({length:20},(_,i)=>({
-    id:`co-${i+1}`,icon:"🍳",name:`簡単料理${i+1}`,desc:"手順を守る練習。"
-  })),
-  snack: Array.from({length:20},(_,i)=>({
-    id:`sn-${i+1}`,icon:"🍪",name:`おやつ作り${i+1}`,desc:"選択と達成感。"
-  })),
-  rules: Array.from({length:20},(_,i)=>({
-    id:`ru-${i+1}`,icon:"🎲",name:`ルール遊び${i+1}`,desc:"順番・待つ練習。"
-  })),
-  life: Array.from({length:20},(_,i)=>({
-    id:`li-${i+1}`,icon:"🏠",name:`生活学習${i+1}`,desc:"自立につながる。"
-  })),
-  out: Array.from({length:20},(_,i)=>({
-    id:`ou-${i+1}`,icon:"🚌",name:`外出活動${i+1}`,desc:"安全と社会性。"
-  })),
-};
-</script>
+    // 最小例（あなたの大量データに差し替え可）
+    const baseActivities = {
+      exercise: [
+        { id:"ex-001", icon:"🏃", name:"しっぽ取り（ルール簡易）", desc:"合図で開始/停止。衝突を避ける範囲設定と役割交代。" },
+        { id:"ex-002", icon:"🧊", name:"ストップ＆ゴー（音で切替）", desc:"音が止まったら停止。抑制コントロール（実行機能）。" },
+      ],
+      finger: [
+        { id:"fi-001", icon:"🧵", name:"ひも通し（太→細）", desc:"難易度を段階化。両手協応と集中を育てる。" },
+      ],
+      focus: [
+        { id:"fo-001", icon:"🧠", name:"感情カード（気持ち当て）", desc:"表情→気持ち→理由。SSTの導入。" },
+      ],
+      craft: [],
+      cook: [],
+      snack: [],
+      rules: [],
+      life: [],
+      out: [],
+    };
+
+    // -------------------------------
+    // 2) localStorage 永続化
+    //   保存キーはカテゴリ別
+    // -------------------------------
+    const storageKey = (c) => `katsudo_custom_${c}`;
+
+    function loadCustom(c){
+      try{
+        const raw = localStorage.getItem(storageKey(c));
+        if(!raw) return [];
+        const arr = JSON.parse(raw);
+        return Array.isArray(arr) ? arr : [];
+      }catch(e){
+        return [];
+      }
+    }
+
+    function saveCustom(c, arr){
+      localStorage.setItem(storageKey(c), JSON.stringify(arr));
+    }
+
+    function getAllItems(c){
+      const base = baseActivities[c] || [];
+      const custom = loadCustom(c);
+      return base.concat(custom);
+    }
+
+    // -------------------------------
+    // 3) UI要素
+    // -------------------------------
+    const titleEl = document.getElementById("pageTitle");
+    const metaEl  = document.getElementById("meta");
+    const listEl  = document.getElementById("list");
+    const searchEl = document.getElementById("search");
+
+    document.getElementById("backBtn").addEventListener("click", () => history.back());
+
+    const cname = categoryName[cat] || "活動";
+    titleEl.textContent = `${cname}（一覧）`;
+
+    // -------------------------------
+    // 4) 描画
+    // -------------------------------
+    function render(){
+      const q = (searchEl.value || "").trim().toLowerCase();
+      const items = getAllItems(cat).filter(a => {
+        if(!q) return true;
+        const t = `${a.name} ${a.desc}`.toLowerCase();
+        return t.includes(q);
+      });
+
+      metaEl.textContent = `選択中：${cname} ／ ${items.length}件（検索反映）`;
+      listEl.innerHTML = "";
+
+      if(items.length === 0){
+        listEl.innerHTML = `<div class="empty">該当する活動がありません。</div>`;
+        return;
+      }
+
+      items.forEach(a => {
+        const div = document.createElement("div");
+        div.className = "item";
+
+        // custom判定（custom配列に存在するか）
+        const customArr = loadCustom(cat);
+        const isCustom = customArr.some(x => x.id === a.id);
+
+        // 行クリック：詳細へ
+        div.addEventListener("click", () => {
+          location.href = `action.html?cat=${encodeURIComponent(cat)}&id=${encodeURIComponent(a.id)}`;
+        });
+
+        div.innerHTML = `
+          <div class="badge" aria-hidden="true">${a.icon || "📌"}</div>
+          <div style="padding-right:36px;">
+            <div class="name">${escapeHtml(a.name || "")}</div>
+            <div class="desc">${escapeHtml(a.desc || "")}</div>
+          </div>
+          ${isCustom ? `<button class="trash" type="button" title="削除">🗑️</button>` : ``}
+        `;
+
+        // 削除（customのみ）
+        if(isCustom){
+          const trashBtn = div.querySelector(".trash");
+          trashBtn.addEventListener("click", (ev) => {
+            ev.stopPropagation(); // 行クリックを止める
+            if(!confirm("この活動を削除しますか？（この端末の保存分のみ）")) return;
+            const next = customArr.filter(x => x.id !== a.id);
+            saveCustom(cat, next);
+            render();
+          });
+        }
+
+        listEl.appendChild(div);
+      });
+    }
+
+    searchEl.addEventListener("input", render);
+
+    function escapeHtml(s){
+      return String(s)
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+    }
+
+    // -------------------------------
+    // 5) 追加モーダル
+    // -------------------------------
+    const overlay = document.getElementById("overlay");
+    const addBtn = document.getElementById("addBtn");
+    const closeBtn = document.getElementById("closeBtn");
+    const cancelBtn = document.getElementById("cancelBtn");
+    const saveBtn = document.getElementById("saveBtn");
+
+    const fName = document.getElementById("fName");
+    const fDesc = document.getElementById("fDesc");
+    const fIcon = document.getElementById("fIcon");
+    const fId   = document.getElementById("fId");
+
+    function openModal(){
+      overlay.classList.add("show");
+      overlay.setAttribute("aria-hidden","false");
+      // 初期値
+      fName.value = "";
+      fDesc.value = "";
+      fIcon.value = "";
+      fId.value = "";
+      setTimeout(() => fName.focus(), 0);
+    }
+    function closeModal(){
+      overlay.classList.remove("show");
+      overlay.setAttribute("aria-hidden","true");
+    }
+
+    addBtn.addEventListener("click", openModal);
+    closeBtn.addEventListener("click", closeModal);
+    cancelBtn.addEventListener("click", closeModal);
+
+    // 背景クリックで閉じる
+    overlay.addEventListener("click", (e) => {
+      if(e.target === overlay) closeModal();
+    });
+
+    // 保存
+    saveBtn.addEventListener("click", () => {
+      const name = (fName.value || "").trim();
+      const desc = (fDesc.value || "").trim();
+      const icon = (fIcon.value || "").trim() || "📌";
+      let id = (fId.value || "").trim();
+
+      if(!name){
+        alert("活動名を入力してください。");
+        fName.focus();
+        return;
+      }
+      if(!id){
+        // 自動ID：cat + timestamp
+        id = `${cat}-c-${Date.now()}`;
+      }
+
+      // 既存IDチェック（base + custom）
+      const allIds = new Set(getAllItems(cat).map(x => x.id));
+      if(allIds.has(id)){
+        alert("そのIDは既に存在します。別のIDにしてください。");
+        fId.focus();
+        return;
+      }
+
+      const custom = loadCustom(cat);
+      custom.push({ id, icon, name, desc, custom:true, createdAt: Date.now() });
+      saveCustom(cat, custom);
+
+      closeModal();
+      render();
+    });
+
+    // 初回描画
+    render();
+  </script>
+</body>
+</html>
