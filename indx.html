@@ -1,86 +1,80 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Learning｜活動・カリキュラム</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>放課後児童クラブ 活動ナビ</title>
 
 <style>
-:root {
-  --primary:#2563eb;
-  --bg:#f8fafc;
-  --card:#ffffff;
-  --text:#0f172a;
-  --radius:16px;
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Hiragino Kaku Gothic ProN",
+               "Noto Sans JP", "Helvetica Neue", Arial, sans-serif;
+  background: #f5f6f8;
 }
 
-* { box-sizing:border-box; font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans",sans-serif;}
-body { margin:0; background:var(--bg); color:var(--text);}
-
+/* ヘッダー */
 header {
-  padding:32px;
-  background:white;
-  border-bottom:1px solid #e5e7eb;
-}
-header h1 { margin:0; }
-
-main {
-  max-width:1200px;
-  margin:auto;
-  padding:32px 20px;
+  background: #4fc3c7;
+  color: #fff;
+  text-align: center;
+  padding: 18px;
+  font-size: 20px;
+  font-weight: 700;
 }
 
-.section-title {
-  font-size:22px;
-  margin-bottom:16px;
-}
-
+/* グリッド */
 .grid {
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-  gap:20px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  padding: 24px 16px;
 }
 
-.card {
-  background:var(--card);
-  border-radius:var(--radius);
-  padding:20px;
-  box-shadow:0 10px 25px rgba(0,0,0,0.05);
+/* アイテム */
+.item {
+  background: #fff;
+  border-radius: 18px;
+  padding: 14px 6px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  cursor: pointer;
+  transition: transform 0.1s;
 }
 
-.badge {
-  display:inline-block;
-  background:#eef2ff;
-  color:#1e40af;
-  padding:4px 10px;
-  border-radius:999px;
-  font-size:12px;
-  margin-bottom:8px;
+.item:active {
+  transform: scale(0.96);
 }
 
-button {
-  margin-top:12px;
-  padding:10px 16px;
-  border:none;
-  border-radius:999px;
-  background:var(--primary);
-  color:white;
-  font-weight:600;
-  cursor:pointer;
+/* 丸アイコン */
+.icon {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 8px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+  color: #fff;
 }
 
-select {
-  width:100%;
-  padding:10px;
-  margin-bottom:10px;
-  border-radius:8px;
-  border:1px solid #cbd5f5;
-}
-.output {
-  margin-top:16px;
-  background:#f1f5f9;
-  padding:16px;
-  border-radius:12px;
+/* 色 */
+.run { background:#ff8a65; }
+.hand { background:#9575cd; }
+.focus { background:#4db6ac; }
+.craft { background:#fbc02d; }
+.cook { background:#66bb6a; }
+.snack { background:#ffb74d; }
+.rule { background:#64b5f6; }
+.life { background:#81c784; }
+.out { background:#90a4ae; }
+
+/* ラベル */
+.label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
 }
 </style>
 </head>
@@ -88,116 +82,57 @@ select {
 <body>
 
 <header>
-  <h1>Learning｜カリキュラム・活動</h1>
+  放課後児童クラブ 活動ナビ
 </header>
 
-<main>
+<div class="grid">
 
-<!-- カリキュラム -->
-<section>
-  <div class="section-title">📘 カリキュラム（活動セット）</div>
-  <div class="grid">
-    <div class="card">
-      <span class="badge">集中力</span>
-      <h3>静かに集中プログラム</h3>
-      <p>指先・順序・自己調整を育てる。</p>
-      <button>このカリキュラムを見る</button>
-    </div>
-
-    <div class="card">
-      <span class="badge">協調性</span>
-      <h3>みんなで協力チャレンジ</h3>
-      <p>小集団で役割分担。</p>
-      <button>このカリキュラムを見る</button>
-    </div>
-
-    <div class="card">
-      <span class="badge">感情</span>
-      <h3>気持ちコントロール週間</h3>
-      <p>クールダウンと表現。</p>
-      <button>このカリキュラムを見る</button>
-    </div>
+  <div class="item">
+    <div class="icon run">🏃‍♂️</div>
+    <div class="label">運動</div>
   </div>
-</section>
 
-<br><br>
-
-<!-- 活動ライブラリ -->
-<section>
-  <div class="section-title">🧩 単体活動ライブラリ</div>
-  <div class="grid">
-    <div class="card">
-      <span class="badge">指先</span>
-      <h3>洗濯バサミ暗号</h3>
-      <p>色と順番を合わせる。</p>
-    </div>
-    <div class="card">
-      <span class="badge">静</span>
-      <h3>無言パズル</h3>
-      <p>声を出さずに完成。</p>
-    </div>
-    <div class="card">
-      <span class="badge">協力</span>
-      <h3>新聞タワー</h3>
-      <p>チームで工夫。</p>
-    </div>
+  <div class="item">
+    <div class="icon hand">✋</div>
+    <div class="label">指先課題</div>
   </div>
-</section>
 
-<br><br>
-
-<!-- 活動自動生成 -->
-<section>
-  <div class="section-title">⚡ 活動を自動生成</div>
-  <div class="card">
-    <select id="goal">
-      <option>ねらいを選ぶ</option>
-      <option>集中力</option>
-      <option>協調性</option>
-      <option>指先</option>
-    </select>
-
-    <select id="time">
-      <option>時間</option>
-      <option>5分</option>
-      <option>15分</option>
-      <option>30分</option>
-    </select>
-
-    <select id="style">
-      <option>スタイル</option>
-      <option>静か</option>
-      <option>動く</option>
-      <option>個別</option>
-    </select>
-
-    <button onclick="generate()">生成する</button>
-
-    <div class="output" id="output">
-      条件を選んで「生成する」を押してください
-    </div>
+  <div class="item">
+    <div class="icon focus">🧠</div>
+    <div class="label">集中課題</div>
   </div>
-</section>
 
-</main>
+  <div class="item">
+    <div class="icon craft">🎨</div>
+    <div class="label">工作</div>
+  </div>
 
-<script>
-function generate() {
-  const ideas = [
-    "洗濯バサミ順番チャレンジ",
-    "無言ミッションカード",
-    "色合わせ集中ゲーム",
-    "ペアで協力タスク"
-  ];
-  const pick = ideas[Math.floor(Math.random()*ideas.length)];
-  document.getElementById("output").innerHTML = `
-    <strong>生成された活動</strong><br>
-    ・${pick}<br>
-    ・見本を置いて静かに実施<br>
-    ・成功したら難易度UP
-  `;
-}
-</script>
+  <div class="item">
+    <div class="icon cook">🍳</div>
+    <div class="label">料理</div>
+  </div>
+
+  <div class="item">
+    <div class="icon snack">🍪</div>
+    <div class="label">おやつ作り</div>
+  </div>
+
+  <div class="item">
+    <div class="icon rule">🎲</div>
+    <div class="label">ルールゲーム</div>
+  </div>
+
+  <div class="item">
+    <div class="icon life">🏠</div>
+    <div class="label">生活学習</div>
+  </div>
+
+  <div class="item">
+    <div class="icon out">🚌</div>
+    <div class="label">外出</div>
+  </div>
+
+</div>
 
 </body>
 </html>
