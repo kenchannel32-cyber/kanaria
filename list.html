@@ -1,115 +1,4 @@
-<!doctype html>
-<html lang="ja">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>活動一覧</title>
-  <style>
-    :root{
-      --brand:#35b8b6;
-      --text:#111;
-      --muted:#666;
-      --bg:#f6f7f8;
-      --card:#fff;
-      --shadow: 0 10px 24px rgba(0,0,0,.08);
-      --radius:16px;
-    }
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Noto Sans JP","Segoe UI",Roboto,Arial;
-      color:var(--text);
-      background:var(--bg);
-    }
-    header{
-      background:var(--brand);
-      color:#fff;
-      padding:14px 12px;
-      display:flex;
-      align-items:center;
-      gap:10px;
-    }
-    header .title{
-      font-weight:900;
-      letter-spacing:.04em;
-      font-size:18px;
-      flex:1;
-      text-align:center;
-      margin-right:34px; /* 戻る分の見た目調整 */
-    }
-    .back{
-      appearance:none;border:0;background:rgba(255,255,255,.18);
-      color:#fff;border-radius:999px;
-      padding:8px 12px;
-      font-weight:700;
-      cursor:pointer;
-    }
-    main{max-width:820px;margin:0 auto;padding:14px 12px 26px;}
-    .meta{color:var(--muted);font-size:13px;margin:8px 2px 12px;}
-    .list{
-      display:grid;
-      gap:12px;
-    }
-    .item{
-      background:var(--card);
-      border-radius:var(--radius);
-      box-shadow:var(--shadow);
-      padding:14px 14px;
-      display:flex;
-      align-items:center;
-      gap:12px;
-      cursor:pointer;
-      user-select:none;
-    }
-    .badge{
-      width:44px;height:44px;border-radius:12px;
-      display:grid;place-items:center;
-      background:#eef7f7;color:#116;
-      font-size:20px;
-      flex:0 0 auto;
-    }
-    .name{font-weight:900}
-    .desc{color:var(--muted);font-size:13px;margin-top:2px}
-    .empty{
-      background:var(--card);
-      border-radius:var(--radius);
-      box-shadow:var(--shadow);
-      padding:16px;
-      color:var(--muted);
-    }
-  </style>
-</head>
-<body>
-  <header>
-    <button class="back" type="button" id="backBtn">←</button>
-    <div class="title" id="pageTitle">活動一覧</div>
-  </header>
-
-  <main>
-    <div class="meta" id="meta"></div>
-    <div class="list" id="list"></div>
-  </main>
-
-  <script>
-    // URLパラメータ取得
-    const params = new URLSearchParams(location.search);
-    const cat = params.get("cat") || "exercise";
-
-    // カテゴリ名（表示用）
-    const categoryName = {
-      exercise:"運動",
-      finger:"指先課題",
-      focus:"集中課題",
-      craft:"工作",
-      cook:"料理",
-      snack:"おやつ作り",
-      rules:"ルールゲーム",
-      life:"生活学習",
-      out:"外出",
-    };
-
-    // 活動データ（例）※ここを増やすほど「何千パターン」に近づけられます
-    const activities =<script>
+<script>
   // URLパラメータ取得
   const params = new URLSearchParams(location.search);
   const cat = params.get("cat") || "exercise";
@@ -127,11 +16,7 @@
     out:"外出",
   };
 
-  /*
-    ✅ 活動データ（合計108件）
-    12件 × 9カテゴリ = 108件
-    療育でよく使われる枠組み（SST、視覚支援、実行機能、感覚統合、自己調整、協同遊びなど）を意識
-  */
+  // ✅ 活動データ（合計108件）
   const activities = {
     exercise: [
       { id:"ex-001", icon:"🏃", name:"しっぽ取り（ルール簡易）", desc:"合図で開始/停止。衝突を避ける範囲設定と役割交代。" },
@@ -183,89 +68,89 @@
       { id:"cr-002", icon:"✂️", name:"切り貼りコラージュ", desc:"テーマを決める→集める→配置。計画性を育てる。" },
       { id:"cr-003", icon:"🧻", name:"紙皿工作（回転ゴマ等）", desc:"単純工程で達成。手指と因果関係理解。" },
       { id:"cr-004", icon:"📦", name:"箱の仕分け工作（分類ラベル）", desc:"色/用途で箱を作る。生活スキルに接続。" },
-      { id:"cr-005", icon:"🧷", name:"安全ピン風（洗濯ばさみアート）", desc:"留める動作で手指。デザインを工夫。" },
+      { id:"cr-005", icon:"🧷", name:"洗濯ばさみアート", desc:"留める動作で手指。デザインを工夫。" },
       { id:"cr-006", icon:"🧱", name:"ストロー構造物（短→長）", desc:"支える/倒れるを学ぶ。試行錯誤を言語化。" },
-      { id:"cr-007", icon:"🖍️", name:"線からはみ出さない塗り絵", desc:"枠の認識と力加減。タイムより丁寧さ重視。" },
+      { id:"cr-007", icon:"🖍️", name:"塗り絵（枠意識）", desc:"枠の認識と力加減。丁寧さ重視。" },
       { id:"cr-008", icon:"🧲", name:"マグネット絵合わせ", desc:"同じ形を探して貼る。視覚探索とマッチング。" },
       { id:"cr-009", icon:"🧵", name:"毛糸巻き（ボード）", desc:"巻く→整える。落ち着きやすい反復活動。" },
       { id:"cr-010", icon:"📮", name:"メッセージカード作り", desc:"相手を想像→言葉を選ぶ。SST（他者視点）。" },
       { id:"cr-011", icon:"🧊", name:"感覚素材（紙の質比べ）", desc:"つるつる/ざらざら等を言語化。感覚統合の入口。" },
-      { id:"cr-012", icon:"🏷️", name:"名札づくり（持ち物管理）", desc:"自分の物を識別。生活自立へつながる。" },
+      { id:"cr-012", icon:"🏷️", name:"名札づくり", desc:"自分の物を識別。生活自立へつながる。" },
     ],
 
     cook: [
-      { id:"co-001", icon:"🍙", name:"おにぎり（具を選ぶ）", desc:"選択→実行→片付け。スモールステップで手順化。" },
+      { id:"co-001", icon:"🍙", name:"おにぎり（具を選ぶ）", desc:"選択→実行→片付け。手順化で安心。" },
       { id:"co-002", icon:"🥗", name:"ミニサラダ（色で分類）", desc:"赤/緑/黄で分類して盛る。認知と食育。" },
       { id:"co-003", icon:"🍲", name:"具材を数えるスープ", desc:"同じ数だけ入れる。数概念と手順。" },
-      { id:"co-004", icon:"🥚", name:"ゆで卵の殻むき練習", desc:"指先・力加減。やりやすいひび入れから。" },
-      { id:"co-005", icon:"🍞", name:"サンドイッチ組立", desc:"順番通りに重ねる。視覚手順カードが相性◎。" },
-      { id:"co-006", icon:"🧊", name:"氷を運ぶリレー（室内）", desc:"落とさない工夫。注意と速度コントロール。" },
-      { id:"co-007", icon:"🥄", name:"計量スプーンで混ぜる", desc:"同量を入れる。実行機能（計画→実行）。" },
-      { id:"co-008", icon:"🍠", name:"レンジ蒸し野菜（安全手順）", desc:"熱い/危険を視覚で提示。安全学習に。" },
-      { id:"co-009", icon:"🧼", name:"衛生ルール学習（手洗い）", desc:"チェック表で可視化。生活スキル強化。" },
-      { id:"co-010", icon:"🍚", name:"配膳シミュレーション", desc:"順番・声かけ・待つ。SST＋生活スキル。" },
-      { id:"co-011", icon:"🧊", name:"冷たい/温かいの違い言語化", desc:"感覚を言葉に。自己理解と自己表現。" },
-      { id:"co-012", icon:"🗒️", name:"レシピカード作り", desc:"材料→手順→片付け。見通し作りの練習。" },
+      { id:"co-004", icon:"🥚", name:"ゆで卵の殻むき", desc:"指先・力加減。やりやすい方法から。" },
+      { id:"co-005", icon:"🍞", name:"サンドイッチ組立", desc:"順番通りに重ねる。視覚手順カード◎。" },
+      { id:"co-006", icon:"🧊", name:"氷を運ぶリレー（室内）", desc:"落とさない工夫。注意と速度調整。" },
+      { id:"co-007", icon:"🥄", name:"計量スプーンで混ぜる", desc:"同量を入れる。計画→実行の練習。" },
+      { id:"co-008", icon:"🍠", name:"レンジ蒸し野菜（安全）", desc:"熱い注意を視覚提示。安全学習に。" },
+      { id:"co-009", icon:"🧼", name:"衛生ルール（手洗い）", desc:"チェック表で可視化。生活スキル。" },
+      { id:"co-010", icon:"🍚", name:"配膳シミュレーション", desc:"順番・声かけ・待つ。SST＋生活。" },
+      { id:"co-011", icon:"🧊", name:"温度の違いを言語化", desc:"感覚を言葉に。自己理解と表現。" },
+      { id:"co-012", icon:"🗒️", name:"レシピカード作り", desc:"材料→手順→片付け。見通し作り。" },
     ],
 
     snack: [
-      { id:"sn-001", icon:"🍪", name:"型抜きクッキー（順番カード）", desc:"工程を写真で提示。待ち時間は別タスクで調整。" },
-      { id:"sn-002", icon:"🍎", name:"フルーツヨーグルト", desc:"切る/入れる/混ぜる。手指と手順。" },
-      { id:"sn-003", icon:"🍡", name:"フルーツ串（安全ルール）", desc:"道具の扱いを事前確認。見守り強化。" },
-      { id:"sn-004", icon:"🍫", name:"チョコのトッピング", desc:"選択肢から選ぶ→飾る。自己決定と達成。" },
-      { id:"sn-005", icon:"🧇", name:"ホットケーキミックス（混ぜる）", desc:"混ぜる回数を数える。力加減とリズム。" },
-      { id:"sn-006", icon:"🍠", name:"さつまいもスティック", desc:"数をそろえて盛る。視覚で整える練習。" },
-      { id:"sn-007", icon:"🍿", name:"ポップコーン（量を分ける）", desc:"同じ量を分ける。公平感と数概念。" },
-      { id:"sn-008", icon:"🥨", name:"おやつの選択会議（SST）", desc:"希望→理由→譲る/代案。話し合いスキル。" },
-      { id:"sn-009", icon:"🧼", name:"アレルギー注意ポスター作り", desc:"安全ルールを視覚化。理解と共有。" },
-      { id:"sn-010", icon:"🧊", name:"冷凍フルーツで感覚体験", desc:"冷たい刺激を言語化。苦手配慮しながら。" },
-      { id:"sn-011", icon:"📦", name:"おやつ配布（役割交代）", desc:"配る係/受け取る係。順番と社会性。" },
-      { id:"sn-012", icon:"🗓️", name:"おやつスケジュール作成", desc:"今日は何/次は何。見通しで落ち着きやすい。" },
+      { id:"sn-001", icon:"🍪", name:"型抜きクッキー", desc:"工程を写真で提示。待ち時間配慮。" },
+      { id:"sn-002", icon:"🍎", name:"フルーツヨーグルト", desc:"切る/入れる/混ぜる。手順と手指。" },
+      { id:"sn-003", icon:"🍡", name:"フルーツ串（安全）", desc:"道具の扱いを事前確認。見守り。" },
+      { id:"sn-004", icon:"🍫", name:"トッピングを選ぶ", desc:"選択→飾る。自己決定と達成感。" },
+      { id:"sn-005", icon:"🧇", name:"ホットケーキ（混ぜる）", desc:"混ぜる回数を数える。力加減。" },
+      { id:"sn-006", icon:"🍠", name:"さつまいもスティック", desc:"数を揃えて盛る。整える練習。" },
+      { id:"sn-007", icon:"🍿", name:"ポップコーン（分ける）", desc:"同じ量を分ける。公平と数概念。" },
+      { id:"sn-008", icon:"🥨", name:"おやつの話し合い（SST）", desc:"希望→理由→代案。交渉と譲る。" },
+      { id:"sn-009", icon:"🧼", name:"アレルギー注意ポスター", desc:"安全ルールを視覚化。共有する。" },
+      { id:"sn-010", icon:"🧊", name:"冷凍フルーツ感覚体験", desc:"冷たい刺激を言語化。配慮しつつ。" },
+      { id:"sn-011", icon:"📦", name:"おやつ配布（役割交代）", desc:"配る/受け取る。順番と社会性。" },
+      { id:"sn-012", icon:"🗓️", name:"おやつスケジュール作成", desc:"今日は何/次は何。見通しで安心。" },
     ],
 
     rules: [
-      { id:"ru-001", icon:"🎲", name:"すごろく（待つ練習）", desc:"順番・負けてもOKのルール確認。SSTに最適。" },
-      { id:"ru-002", icon:"🃏", name:"神経衰弱（枚数調整）", desc:"少枚数→増やす。記憶と抑制コントロール。" },
-      { id:"ru-003", icon:"🧩", name:"UNO（ルールを視覚掲示）", desc:"特別ルールはカードで掲示。混乱を減らす。" },
-      { id:"ru-004", icon:"🟦", name:"色合わせゲーム（簡易）", desc:"同じ色に置く。ルール理解の導入。" },
-      { id:"ru-005", icon:"🗣️", name:"ジェスチャー伝言", desc:"非言語コミュニケーション。SST（表出）。" },
-      { id:"ru-006", icon:"🎯", name:"得点ルールを決める会議", desc:"ルール作り→合意。メタ認知と交渉。" },
-      { id:"ru-007", icon:"⌛️", name:"タイムアタック（静かに）", desc:"静かに黙々。集中と自己管理。" },
-      { id:"ru-008", icon:"🧠", name:"推理ゲーム（はい/いいえ）", desc:"質問の仕方を学ぶ。論理と会話の順番。" },
-      { id:"ru-009", icon:"🤝", name:"協力ゲーム（全員で達成）", desc:"勝敗より共同達成。関係づくりに。" },
-      { id:"ru-010", icon:"📝", name:"ルールカード作成", desc:"守ることを短文で。視覚支援（掲示）。" },
-      { id:"ru-011", icon:"🧑‍🤝‍🧑", name:"役割カード（司会/記録）", desc:"係で参加しやすく。集団参加の支援。" },
-      { id:"ru-012", icon:"🔁", name:"リプレイ（振り返り）", desc:"よかった点を言う。ポジティブ行動支援に。" },
+      { id:"ru-001", icon:"🎲", name:"すごろく（待つ）", desc:"順番・負けてもOK。SSTに最適。" },
+      { id:"ru-002", icon:"🃏", name:"神経衰弱（枚数調整）", desc:"少枚数→増やす。記憶と抑制。" },
+      { id:"ru-003", icon:"🧩", name:"UNO（ルール掲示）", desc:"特別ルールはカードで掲示。" },
+      { id:"ru-004", icon:"🟦", name:"色合わせ（簡易）", desc:"同じ色に置く。ルール理解導入。" },
+      { id:"ru-005", icon:"🗣️", name:"ジェスチャー伝言", desc:"非言語コミュニケーション練習。" },
+      { id:"ru-006", icon:"🎯", name:"ルール作り会議", desc:"合意形成。メタ認知と交渉。" },
+      { id:"ru-007", icon:"⌛️", name:"静かなタイムアタック", desc:"黙々と。集中と自己管理。" },
+      { id:"ru-008", icon:"🧠", name:"はい/いいえ推理", desc:"質問の仕方。論理と会話順番。" },
+      { id:"ru-009", icon:"🤝", name:"協力ゲーム（全員達成）", desc:"共同達成で関係づくり。" },
+      { id:"ru-010", icon:"📝", name:"ルールカード作成", desc:"守ることを短文で視覚化。" },
+      { id:"ru-011", icon:"🧑‍🤝‍🧑", name:"役割カード（司会/記録）", desc:"係で参加しやすくする。" },
+      { id:"ru-012", icon:"🔁", name:"振り返り（よかった点）", desc:"成功を言語化。PBSに。" },
     ],
 
     life: [
-      { id:"li-001", icon:"🧺", name:"片付け手順（写真ラベル）", desc:"どこに戻すかを視覚化。自立を促す。" },
-      { id:"li-002", icon:"🧼", name:"手洗いチェック（5工程）", desc:"工程をカードで。衛生とルーティン化。" },
-      { id:"li-003", icon:"🧥", name:"上着/靴の整理（マーク）", desc:"自分の場所を明確に。見つけやすくする工夫。" },
-      { id:"li-004", icon:"⏰", name:"タイムタイマーで切替練習", desc:"終わりが見えると切替しやすい。実行機能支援。" },
-      { id:"li-005", icon:"📋", name:"ToDoリスト（3つだけ）", desc:"やることを少数に。達成→チェックで自己効力感。" },
-      { id:"li-006", icon:"🧠", name:"困った時のカード（助けて）", desc:"言いにくい子の支援。代替コミュニケーション。" },
-      { id:"li-007", icon:"🙂", name:"気持ち温度計（1〜5）", desc:"自分の状態を数で表す。自己理解と調整。" },
-      { id:"li-008", icon:"🧘", name:"クールダウンコーナー利用練習", desc:"行く→休む→戻る。自己調整の仕組み化。" },
-      { id:"li-009", icon:"🗣️", name:"あいさつスクリプト練習", desc:"定型文→状況別。SST（開始の言葉）。" },
-      { id:"li-010", icon:"🎒", name:"持ち物点検（写真チェック）", desc:"忘れ物予防。視覚支援で負担を減らす。" },
-      { id:"li-011", icon:"🧾", name:"お金ごっこ（買い物練習）", desc:"支払う/おつり/待つ。生活スキルと社会性。" },
-      { id:"li-012", icon:"🤝", name:"トラブル時の言い方練習", desc:"Iメッセージ（いやだった/やめて）。SSTの核。" },
+      { id:"li-001", icon:"🧺", name:"片付け手順（写真）", desc:"戻す場所を視覚化。自立支援。" },
+      { id:"li-002", icon:"🧼", name:"手洗いチェック（5工程）", desc:"工程カードでルーティン化。" },
+      { id:"li-003", icon:"🧥", name:"上着/靴の整理（マーク）", desc:"自分の場所を明確化。" },
+      { id:"li-004", icon:"⏰", name:"タイムタイマー切替", desc:"終わりが見える支援。" },
+      { id:"li-005", icon:"📋", name:"ToDoリスト（3つ）", desc:"やることを絞って達成。" },
+      { id:"li-006", icon:"🧠", name:"困った時カード（助けて）", desc:"代替コミュニケーション支援。" },
+      { id:"li-007", icon:"🙂", name:"気持ち温度計（1〜5）", desc:"自己理解と自己調整。" },
+      { id:"li-008", icon:"🧘", name:"クールダウン練習", desc:"休む→戻るの流れを作る。" },
+      { id:"li-009", icon:"🗣️", name:"あいさつスクリプト", desc:"定型→状況別。SST導入。" },
+      { id:"li-010", icon:"🎒", name:"持ち物点検（写真）", desc:"忘れ物予防。視覚支援。" },
+      { id:"li-011", icon:"🧾", name:"お金ごっこ", desc:"買い物の流れ。待つ練習。" },
+      { id:"li-012", icon:"🤝", name:"トラブルの言い方（Iメッセージ）", desc:"いやだった/やめて。SST核。" },
     ],
 
     out: [
-      { id:"ou-001", icon:"🚶", name:"交通ルール散歩（止まる/見る）", desc:"止まる→見る→渡る。安全行動を繰り返し学習。" },
-      { id:"ou-002", icon:"🗺️", name:"近隣マップ探検（チェックリスト）", desc:"見つけた物に丸。見通しと達成が作れる。" },
-      { id:"ou-003", icon:"🛝", name:"公園で順番（遊具）", desc:"並ぶ/交代。SSTの実地練習。" },
-      { id:"ou-004", icon:"🔊", name:"音のルール（声の大きさ）", desc:"外でも屋内でも声の調整。自己調整。" },
-      { id:"ou-005", icon:"📷", name:"写真ミッション（テーマ探し）", desc:"赤い物/丸い物など。注意と分類。" },
-      { id:"ou-006", icon:"🌳", name:"自然観察（触る前に確認）", desc:"安全確認→観察→記録。感覚/科学への入口。" },
-      { id:"ou-007", icon:"🤝", name:"ペア行動（バディ）", desc:"一緒に移動。社会性と安全管理。" },
-      { id:"ou-008", icon:"🧾", name:"公共マナー（3つだけ）", desc:"走らない/さわらない/静かに。視覚カードで提示。" },
-      { id:"ou-009", icon:"🧠", name:"見通しカード（行程表）", desc:"行く→やる→帰る。予定の可視化で安心。" },
-      { id:"ou-010", icon:"🚌", name:"乗り物観察（数える）", desc:"車の色/数を数える。落ち着きやすい課題化。" },
-      { id:"ou-011", icon:"🧴", name:"外出準備（暑さ/寒さ対策）", desc:"帽子/水分など。自己管理スキル。" },
-      { id:"ou-012", icon:"✅", name:"外出ふり返り（よかった1つ）", desc:"成功体験を言語化。ポジティブ行動支援。" },
+      { id:"ou-001", icon:"🚶", name:"交通ルール散歩", desc:"止まる→見る→渡る。反復学習。" },
+      { id:"ou-002", icon:"🗺️", name:"近隣マップ探検", desc:"見つけたらチェック。見通し。" },
+      { id:"ou-003", icon:"🛝", name:"公園で順番", desc:"並ぶ/交代。SST実地。" },
+      { id:"ou-004", icon:"🔊", name:"声の大きさ調整", desc:"外でも屋内でも自己調整。" },
+      { id:"ou-005", icon:"📷", name:"写真ミッション", desc:"テーマ探し。注意と分類。" },
+      { id:"ou-006", icon:"🌳", name:"自然観察", desc:"安全確認→観察→記録。" },
+      { id:"ou-007", icon:"🤝", name:"バディ行動（ペア）", desc:"安全管理と社会性。" },
+      { id:"ou-008", icon:"🧾", name:"公共マナー（3つ）", desc:"カードで視覚提示。" },
+      { id:"ou-009", icon:"🧠", name:"行程表（見通し）", desc:"行く→やる→帰るで安心。" },
+      { id:"ou-010", icon:"🚌", name:"乗り物観察（数える）", desc:"落ち着きやすい課題化。" },
+      { id:"ou-011", icon:"🧴", name:"外出準備（体調管理）", desc:"帽子/水分など自己管理。" },
+      { id:"ou-012", icon:"✅", name:"外出ふり返り", desc:"よかった1つを言語化。" },
     ],
   };
 
@@ -300,5 +185,3 @@
     });
   }
 </script>
-</body>
-</html>
